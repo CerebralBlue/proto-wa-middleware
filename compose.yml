@@ -1,8 +1,8 @@
 version: '3.8'
 
 services:
-  my-service:
-    image: middleware:latest
+  proto-wa-service:
+    image: proto-wa-middleware
     ports:
       - "3000:3000"
     env_file:
