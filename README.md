@@ -2,6 +2,18 @@
 
 This project serves as a middleware translation layer between Proto/Codebaby Avatars and Watson Assistant, facilitating communication between these two systems.
 
+## API Reference
+
+### 1. POST /api/generate (or /api/generate/:avatarName for compatibility)
+
+#### Request:
+- Expects `Authorization: Bearer xxxx` authentication
+- `conversation` array: An array of objects, each representing a conversation step. Each object should have `role` and `content` properties.
+- `session_id`: A unique identifier for the session.
+
+#### Response:
+- Returns a stream of messages from Watson Assistant
+
 ## Setup Instructions
 
 ### 1. Clone the Repository
