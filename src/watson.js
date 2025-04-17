@@ -1,14 +1,25 @@
 const AssistantV2 = require('ibm-watson/assistant/v2');
-const { IamAuthenticator } = require('ibm-watson/auth');
+const { IamAuthenticator, CloudPakForDataAuthenticator } = require('ibm-watson/auth');
 const { createParser } = require('eventsource-parser');
 
 // Create Assistant service object.
+// const assistant = new AssistantV2({
+//   version: '2024-08-25',
+//   authenticator: new IamAuthenticator({
+//     apikey: process.env.WA_APIKEY,
+//   }),
+//   url: process.env.WA_SERVICE_URL,
+// });
+
+// Create CP4D Assistant service object.
 const assistant = new AssistantV2({
   version: '2024-08-25',
-  authenticator: new IamAuthenticator({
-    apikey: process.env.WA_APIKEY,
+  authenticator: new CloudPakForDataAuthenticator({
+    username: process.env.CP4D_USERNAME,
+    password: process.env.CP4D_PASSWORD,
+    url: process.env.CP4D_AUTH_URL
   }),
-  url: process.env.WA_SERVICE_URL,
+  serviceUrl: process.env.WA_SERVICE_URL
 });
 
 const assistantId = process.env.WA_ENV_ID;

@@ -24,16 +24,7 @@ cd proto-wa-middleware
 ```
 
 ### 2. Configure Environment Variables
-Required values for the .env file (or OCP/Docker env vars):
-
-```
-WA_SERVICE_URL=https://api.us-south.assistant.watson.cloud.ibm.com/instances/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-WA_APIKEY=xxxxx
-WA_ENV_ID=xxxxxx # assistant ID or environment ID
-ACCESS_TOKEN=xxxxxx # set the access token for this server
-
-SERVER_URL=http://localhost:3000 # this is only for the testing script
-```
+Required values for the .env file (or OCP/Docker env vars) are in the .env.example file
 
 ### 3. Build the Docker Image
 Navigate to the project directory and build the Docker image:

@@ -3,11 +3,13 @@ kind: ConfigMap
 metadata:
   name: proto-wa-service-env
 data:
-  WA_SERVICE_URL: xxx
-  WA_APIKEY: xxx
-  WA_ENV_ID: xxx
-  ACCESS_TOKEN: xxx
-  SERVER_URL: http://localhost:3000
+  WA_SERVICE_URL:xxxxxx
+  WA_ENV_ID:xxxx
+  CP4D_AUTH_URL:https://{cpd_url}/icp4d-api/v1/authorize
+  CP4D_USERNAME:xxx
+  CP4D_PASSWORD:xxx
+  ACCESS_TOKEN:xxxx
+  SERVER_URL:http://127.0.0.1:3000
 ---
 apiVersion: v1
 kind: Service
@@ -24,13 +26,16 @@ spec:
 apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
-  name: proto-wa-middleware
+  name: proto-wa-service
 spec:
   to:
     kind: Service
     name: proto-wa-service
+    weight: 100
   port:
     targetPort: 3000
+  wildcardPolicy: None
+
 ---
 apiVersion: apps/v1
 kind: Deployment

@@ -5,8 +5,7 @@ require("dotenv").config({ path: "./.env" });
 
 const messages = [
   "Hi, how are you?",
-  "What is neuralseek?",
-  "How do I filter by collection id?"
+  "Thank you!"
 ];
 
 var conversation = [];

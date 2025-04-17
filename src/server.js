@@ -13,11 +13,17 @@ const port = 3000;
 app.use(cors());
 app.use(express.json({ limit: "50mb", extended: true }));
 
+app.get('/', (req, res) => {
+  res.status(200).send('OK');
+});
+
 app.post("/api/generate/:avatarName", authenticateBearerToken, async (req, res) => {
+  console.log("/api/generate/:avatarName")
   await generate(req, res);
 });
 
 app.post("/api/generate", authenticateBearerToken, async (req, res) => {
+  console.log("/api/generate")
   await generate(req, res);
 });
 
@@ -74,6 +80,7 @@ async function generate(req, res) {
     let response = "";
     const sid = SESSION_ID_MAPPING[session_id];
     stream = await watson.streamMessage(sid, message, function (data) {
+      console.log(JSON.stringify(data, null, 2));
       if (partial = data?.partial_item?.text) { // partial / stream chunk message
         //console.log(partial);
         res.write(partial);
@@ -88,11 +95,17 @@ async function generate(req, res) {
           if (response) // if there was a previously streamed response - add a newline before the next "whole" message
             complete = "\n" + complete;
 
-          response = ""; // clear the streamed response, since we received a new complete response (follow-up message/answer)
+          response = complete; // clear the streamed response, since we received a new complete response (follow-up message/answer)
           res.write(complete);
         }
-      } else if (final = data?.final_response) {
-        // pass - complete API response
+      } else if (final = data?.final_response?.output?.generic[0]?.text) {
+        if (final != response) {
+          if (response) // if there was a previously streamed response - add a newline before the next "whole" message
+            final = "\n" + final;
+
+          response = final; // clear the streamed response, since we received a new complete response (follow-up message/answer)
+          res.write(final);
+        }
       }
     });
 
